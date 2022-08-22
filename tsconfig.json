@@ -10,7 +10,12 @@
       "*": ["src/*"],
       "tests": ["tests/*"],
       "@components/*": ["src/components/*"],
-      "@navigation/*": ["src/navigation/*"]
+      "@navigation/*": ["src/navigation/*"],
+      "@utils/*": ["src/utils/*"],
+      "@store": ["src/store"],
+      "@store/*": ["src/store/*"],
+      "@views/*": ["src/views/*"],
+      "@navigation": ["src/navigation"],
     },
     "typeRoots": ["./types"],
     "allowJs": true,
