@@ -11,6 +11,7 @@
       "*": ["src/*"],
       "tests": ["tests/*"],
       "@components/*": ["src/components/*"],
-  }
+  },
+  "typeRoots": ["./types"]
 }
 }
