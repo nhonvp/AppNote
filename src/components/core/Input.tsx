@@ -1,31 +1,50 @@
 import {
-  StyleProp,
   StyleSheet,
   Text,
   TextInput,
   TextInputProps,
-  TextStyle,
   View,
+  StyleProp,
+  TextStyle,
   ViewStyle,
 } from 'react-native';
 import React, {useState} from 'react';
-import {hp, wp} from '@utils/Reponsive';
-
-import colors from '@utils/colors';
-
+import {width, height} from '../../utils/Responsive';
+import Colors from '../../utils/Colors';
 export interface InputProps extends TextInputProps {
-  label?: string;
-  labelStyles?: StyleProp<TextStyle>;
-  containerStyles?: StyleProp<ViewStyle>;
+  value :string,
+  placeholder : string,
+  onChangeText :(e:string) => void 
+  onBlur :(e:any) => void,
+  secureText ?: boolean
 }
 
 export const Input = (props: InputProps) => {
   return (
-    <View>
-      <Text>Username</Text>
-      <TextInput />
+    <View style={styles.container}>
+      <Text>{props.placeholder}</Text>
+          <TextInput
+            onBlur={props.onBlur}
+            placeholder={props.placeholder}
+            onChangeText={props.onChangeText}
+            style={styles.input}
+            secureTextEntry={props.secureText}
+            value={props.value}
+          />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 30,
+  },
+  input: {
+    height: 50,
+    with: width - 40,
+    borderWidth: 1,
+    padding: 10,
+    color: Colors.black,
+    borderRadius: 8,
+  },
+});

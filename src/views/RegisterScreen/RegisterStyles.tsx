@@ -19,18 +19,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  btnLogin: {
+  btnSignUp: {
     backgroundColor: Colors.black,
-    width: width / 2 - 40,
+    width: width - 40,
   },
-  loginWithSocial: {
-    marginVertical: 20,
-  },
-  btnloginGoogle: {
-    backgroundColor: Colors.green,
-    marginBottom: 20,
-  },
-  btnloginFacebook: {
-    backgroundColor: Colors.blue,
-  },
+
 });
