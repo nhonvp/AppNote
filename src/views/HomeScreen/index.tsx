@@ -4,34 +4,27 @@ import { TextButton } from 'components/core/TextButton';
 import { useNav } from 'navigation/NavigationApp';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
+import { useDispatch } from 'react-redux';
+import { authAction } from 'features/auth/authSlice';
 
 
 export default function Home() {
-  const [user, setuser] = useState();
-  const [logIn, setLogIn] = useState();
-  
   const nav = useNav()
+  const dispatch= useDispatch();
 
-  const handleSignOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-      // await auth().signOut().then(() => console.log('User signed out!'));
-      nav.navigate('Login')
-    } catch (error) {
-      console.log(error)
-    }
+  useEffect(() => {
+    console.log(auth().currentUser)
+  
+  }, [])
+  
+  const handleLogOut = () => {
+    dispatch(authAction.logOut())
+    nav.navigate('Login')
   }
-
-  // const onAuthStateChanged = (user: {}) => {
-  //   setUser(user);
-  //   console.log(user);
-  //   if (user) setloggedIn(true);
-  // }
 
   return (
     <View>
-      <TextButton label='back' onPress={() => handleSignOut()}/>
+      <TextButton label='back' onPress={() => handleLogOut()}/>
     </View>
   )
 }

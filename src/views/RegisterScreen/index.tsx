@@ -5,9 +5,9 @@ import {TextButton} from 'components/core/TextButton';
 import styles from './RegisterStyles';
 import {useNav} from 'navigation/NavigationApp';
 import {Formik} from 'formik';
-import { SignUpPayload } from 'typings/auth';
-import { useAppDispatch,useAppSelector } from 'hooks';
-import { authAction } from 'features/auth/authSlice';
+import {SignUpPayload} from 'typings/auth';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {authAction} from 'features/auth/authSlice';
 
 export default function Register() {
   const nav = useNav();
@@ -26,10 +26,13 @@ export default function Register() {
     email: string;
     password: string;
   }) => {
-    dispatch(authAction.signUpSuccess({
-      email : email,
-      password: password
-    }))
+    dispatch(
+      authAction.signUpSuccess({
+        email: email,
+        password: password,
+      }),
+    );
+    nav.navigate('Login')
   };
   return (
     <View style={styles.container}>
@@ -41,23 +44,17 @@ export default function Register() {
           onSubmit={values => handleSignUp(values)}>
           {({handleChange, handleBlur, handleSubmit, values}) => (
             <View>
-              {/* <Input
-                onChangeText={handleChange('username')}
-                onBlur={handleBlur('username')}
-                value={values.username}
-                placeholder = "Username"
-              /> */}
               <Input
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
-                placeholder= "Email"
+                placeholder="Email"
               />
               <Input
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
                 value={values.password}
-                placeholder ="Password"
+                placeholder="Password"
                 secureText={true}
               />
               <TextButton

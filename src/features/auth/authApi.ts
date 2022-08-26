@@ -6,10 +6,10 @@ export const signUpWithEmailAndPassword = async (
   email: string,
   password: string,
 ) => {
-  return auth()
+  return await auth()
     .createUserWithEmailAndPassword(email, password)
     .then(() => {
-      console.log('User Sign In Success');
+      console.log('User Sign Up Success');
     })
     .catch((error: any) => {
       if (error.code === 'auth/email-already-in-use') {
@@ -18,7 +18,6 @@ export const signUpWithEmailAndPassword = async (
       if (error.code === 'auth/invalid-email') {
         console.log('That email address is invalid!');
       }
-      console.error(error);
     });
 };
 
@@ -28,8 +27,8 @@ export const signInWithEmailAndPassword = async (
 ) => {
   return auth()
     .signInWithEmailAndPassword(email, password)
-    .then(user => {
-      console.log('User Sign In Success', user.user);
+    .then(() => {
+      console.log('User Login Success')
     })
     .catch((error: any) => {
       console.log(error);
@@ -73,9 +72,15 @@ export const signInWithFaceBook = async () => {
 };
 
 export const signOut = async () => {
-  return auth()
-    .signOut()
-    .then(() => {
-      console.log('User SignOut Success');
-    });
+  return auth().signOut().then(() => console.log('User signed out!'));
 };
+
+export const checkUserLogin = async () =>{
+  if(auth().currentUser){
+    console.log(auth().currentUser)
+    return true
+  }else{
+    return false
+  }
+
+}
