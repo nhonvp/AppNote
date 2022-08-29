@@ -4,18 +4,17 @@ import {
   TextInput,
   TextInputProps,
   View,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
+  NativeSyntheticEvent,
+  TextInputFocusEventData
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {width, height} from '../../utils/Responsive';
 import Colors from '../../utils/Colors';
 export interface InputProps extends TextInputProps {
   value :string,
   placeholder : string,
   onChangeText :(e:string) => void 
-  onBlur :(e:any) => void,
+  onBlur :(e : NativeSyntheticEvent<TextInputFocusEventData>) => void,
   secureText ?: boolean
 }
 

@@ -1,17 +1,16 @@
 import {SignUpPayload} from 'typings/auth';
-import {createSlice} from '@reduxjs/toolkit';
-import type {PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 export interface AuthState {
   isLogging: boolean;
-  email: '';
+  email: string;
   currentUser: FirebaseAuthTypes.User | undefined;
   error: undefined;
 }
 
 export interface LoginPayload {
-  type : string,
+  // type : string,
   email : string,
   password : string
 }
@@ -29,20 +28,23 @@ const authSlice = createSlice({
   reducers: {
     loginSuccess: (state, action: PayloadAction<LoginPayload>) => {
       state.isLogging = true,
-      action
+      state.email = action.payload.email,
+      console.log(action)
     },
     loginFailed: (state, action: PayloadAction<LoginPayload>) => {
-      state.isLogging = false, 
+      state.isLogging = false,
       action
     },
     logOut: (state) => {
       state.isLogging = false, 
       state.currentUser = undefined
     },
+    signUpRequest : (state, action: PayloadAction<SignUpPayload>) =>{
+      state.isLogging = false
+    },
     signUpSuccess: (state, action: PayloadAction<SignUpPayload>) => {
       state.isLogging = false, 
-      state.error = undefined,
-      action
+      state.error = undefined
     },
     authError: (state, action) => {
       state.isLogging = false;
@@ -52,7 +54,7 @@ const authSlice = createSlice({
 
 });
 
-const {reducer,actions} = authSlice
+const {reducer} = authSlice
 
 export const authAction = authSlice.actions;
 

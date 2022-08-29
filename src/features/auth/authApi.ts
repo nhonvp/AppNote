@@ -28,7 +28,7 @@ export const signInWithEmailAndPassword = async (
   return auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
-      console.log('User Login Success')
+      console.log('User Login Success');
     })
     .catch((error: any) => {
       console.log(error);
@@ -72,15 +72,16 @@ export const signInWithFaceBook = async () => {
 };
 
 export const signOut = async () => {
-  return auth().signOut().then(() => console.log('User signed out!'));
+  return auth()
+    .signOut()
+    .then(() => console.log('User signed out!'));
 };
 
-export const checkUserLogin = async () =>{
-  if(auth().currentUser){
-    console.log(auth().currentUser)
-    return true
-  }else{
-    return false
+export const checkUserLogin = async () => {
+  if (auth().currentUser) {
+    console.log(auth().currentUser);
+    return true;
+  } else {
+    return false;
   }
-
-}
+};

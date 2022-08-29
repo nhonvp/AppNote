@@ -23,7 +23,7 @@ export interface Props {
 
 export const TextButton = (props: Props) => {
   return (
-      <TouchableWithoutFeedback  onPress={props.onPress}>
+      <TouchableWithoutFeedback  onPress={props.onPress} >
         <View style={[styles.button,props.buttonStyle]}>
             <Text style={[styles.textBtn,props.labelStyle]}>{props.label}</Text>
         </View>

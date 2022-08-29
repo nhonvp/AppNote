@@ -1,32 +1,32 @@
 import {SignUpPayload} from 'typings/auth';
-import { LoginPayload } from './authSlice';
+import {LoginPayload} from './authSlice';
 import {
   signInWithEmailAndPassword,
   signUpWithEmailAndPassword,
   signOut,
   checkUserLogin,
   signInWithGoogle,
-  signInWithFaceBook
+  signInWithFaceBook,
 } from './authApi';
 import {call, fork, put, take, takeEvery, takeLatest} from 'redux-saga/effects';
 import {authAction} from './authSlice';
 import {PayloadAction} from '@reduxjs/toolkit';
 
-function* handleLogin (payload: LoginPayload){
-  switch (payload.type){
-    case 'email' : 
-      yield fork(handleLoginWithEmailAndPassword,payload.email,payload.password)
-      break;
-    case 'google': 
-      yield fork(handleLoginWithGooGle)
-      break;
-    case 'facebook': 
-      yield fork(handleLoginWithFacebook)
-      break;
-  }
-}
+// function* handleLogin (payload: LoginPayload){
+//   switch (payload.type){
+//     case 'email' :
+//       yield fork(handleLoginWithEmailAndPassword,payload.email,payload.password)
+//       break;
+//     case 'google':
+//       yield fork(handleLoginWithGooGle)
+//       break;
+//     case 'facebook':
+//       yield fork(handleLoginWithFacebook)
+//       break;
+//   }
+// }
 
-export function* handleLoginWithEmailAndPassword(action: any) {
+export function* handleLoginWithEmailAndPassword(action: PayloadAction<LoginPayload>) {
   const email = action.payload.email;
   const password = action.payload.password;
   try {
@@ -34,7 +34,7 @@ export function* handleLoginWithEmailAndPassword(action: any) {
       yield call(signInWithEmailAndPassword, email, password);
       yield put(
         authAction.loginSuccess({
-          type : "email",
+          // type : "email",
           email: email,
           password: password,
         }),
@@ -50,13 +50,13 @@ export function* handleLoginWithGooGle() {
     yield call(signInWithGoogle);
     yield put(
       authAction.loginSuccess({
-        type: "google",
-        email : '',
-        password : ''
-      })
-    )
+        // type: "google",
+        email: '',
+        password: '',
+      }),
+    );
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
@@ -65,17 +65,17 @@ export function* handleLoginWithFacebook() {
     yield call(signInWithFaceBook);
     yield put(
       authAction.loginSuccess({
-        type: "facebook",
-        email : '',
-        password : ''
-      })
-    )
+        // type: "facebook",
+        email: '',
+        password: '',
+      }),
+    );
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
-export function* handleSignUp(action: any) {
+export function* handleSignUp(action: PayloadAction<SignUpPayload>) {
   const email = action.payload.email;
   const password = action.payload.password;
   try {
@@ -95,25 +95,23 @@ export function* handleSignUp(action: any) {
 
 export function* handleLogOut() {
   yield call(signOut);
-  yield put(authAction.logOut);
-  console.log('User Logout Success');
 }
 
 function* watchAuthLogin() {
   const check: boolean = yield call(checkUserLogin);
   while (true) {
-    // console.log('a')
     if (!check) {
-      const action: PayloadAction<LoginPayload> = yield take(
+      const actionLogin: PayloadAction<LoginPayload> = yield take(
         authAction.loginSuccess,
       );
-      yield call(handleLoginWithEmailAndPassword, action);
+      yield call(handleLoginWithEmailAndPassword, actionLogin);
     }
-    yield take(authAction.logOut);
+    yield take(authAction.logOut)
     yield call(handleLogOut);
   }
 }
 
 export default function* authSaga() {
+  yield takeLatest(authAction.signUpRequest,handleSignUp)
   yield fork(watchAuthLogin);
 }

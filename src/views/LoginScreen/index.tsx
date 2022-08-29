@@ -4,10 +4,12 @@ import {Input} from '../../components/core/Input';
 import {TextButton} from 'components/core/TextButton';
 import styles from './LoginStyles';
 import {useNav} from 'navigation/NavigationApp';
-import {Formik} from 'formik';
-import { LoginPayload } from 'typings/auth';
-import { useAppDispatch } from 'hooks';
-import { authAction } from 'features/auth/authSlice';
+import {Field, Formik} from 'formik';
+import {LoginPayload} from 'typings/auth';
+import {useAppDispatch} from 'hooks';
+import {authAction} from 'features/auth/authSlice';
+import { validated } from 'utils/validated';
+import auth from '@react-native-firebase/auth';
 
 export default function Login() {
   const nav = useNav();
@@ -17,14 +19,9 @@ export default function Login() {
     password: '',
   };
 
-  // useEffect(() => {
-  //   GoogleSignin.configure({
-  //     webClientId:
-  //       '993505332259-hl7gl9imo7josf2jd98kd9rl54sbq5oh.apps.googleusercontent.com',
-  //   });
-  //   return () => {};
-  // }, []);
-
+  useEffect(() => {
+    console.log(auth().currentUser,"a")
+  }, [])
 
   const handleLogin = ({
     email,
@@ -33,12 +30,14 @@ export default function Login() {
     email: string;
     password: string;
   }) => {
-    dispatch(authAction.loginSuccess({
-      type : "email",
-      email: email,
-      password: password
-    }))
-    nav.navigate('Home')
+    dispatch(
+      authAction.loginSuccess({
+        // type : "email",
+        email: email,
+        password: password,
+      }),
+    );
+    nav.navigate('Home');
   };
 
   const handleSignUp = () => {
@@ -46,21 +45,25 @@ export default function Login() {
   };
 
   const handleLoginGoogle = async () => {
-    dispatch(authAction.loginSuccess({
-      type : "google",
-      email: '',
-      password: ''
-    }))
-    nav.navigate('Home')
+    dispatch(
+      authAction.loginSuccess({
+        // type : "google",
+        email: '',
+        password: '',
+      }),
+    );
+    nav.navigate('Home');
   };
 
   const handleLoginFacebook = async () => {
-    dispatch(authAction.loginSuccess({
-      type : "facebook",
-      email: '',
-      password: ''
-    }))
-    nav.navigate('Home')
+    dispatch(
+      authAction.loginSuccess({
+        // type : "facebook",
+        email: '',
+        password: '',
+      }),
+    );
+    nav.navigate('Home');
   };
 
   return (
@@ -70,8 +73,9 @@ export default function Login() {
       <View>
         <Formik
           initialValues={initialValues}
+          validationSchema={validated}
           onSubmit={values => handleLogin(values)}>
-          {({handleChange, handleBlur, handleSubmit, values}) => (
+          {({handleChange,handleBlur,handleSubmit,values,touched,errors,isValid}) => (
             <View>
               <Input
                 onChangeText={handleChange('email')}
@@ -79,6 +83,11 @@ export default function Login() {
                 value={values.email}
                 placeholder="Email"
               />
+              {touched.email && errors.email && (
+                <Text style={{fontSize: 12, color: '#FF0D10'}}>
+                  {errors.email}
+                </Text>
+              )}
               <Input
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
@@ -86,11 +95,17 @@ export default function Login() {
                 placeholder="Password"
                 secureText={true}
               />
+              {touched.password && errors.password && (
+                <Text style={{fontSize: 12, color: '#FF0D10'}}>
+                  {errors.password}
+                </Text>
+              )}
               <View style={styles.btn}>
                 <TextButton
                   label="Login"
                   onPress={handleSubmit}
                   buttonStyle={styles.btnLogin}
+                  disable={!isValid}
                 />
                 <TextButton
                   label="Sign Up"

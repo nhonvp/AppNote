@@ -8,6 +8,7 @@ import {Formik} from 'formik';
 import {SignUpPayload} from 'typings/auth';
 import {useAppDispatch, useAppSelector} from 'hooks';
 import {authAction} from 'features/auth/authSlice';
+import { validated } from 'utils/validated';
 
 export default function Register() {
   const nav = useNav();
@@ -27,7 +28,7 @@ export default function Register() {
     password: string;
   }) => {
     dispatch(
-      authAction.signUpSuccess({
+      authAction.signUpRequest({
         email: email,
         password: password,
       }),
@@ -41,8 +42,9 @@ export default function Register() {
         <Text style={styles.textHeader}>Register</Text>
         <Formik
           initialValues={initialValues}
+          validationSchema={validated}
           onSubmit={values => handleSignUp(values)}>
-          {({handleChange, handleBlur, handleSubmit, values}) => (
+          {({handleChange, handleBlur, handleSubmit, values,touched,errors,isValid}) => (
             <View>
               <Input
                 onChangeText={handleChange('email')}
@@ -50,6 +52,11 @@ export default function Register() {
                 value={values.email}
                 placeholder="Email"
               />
+              {touched.email && errors.email && (
+                <Text style={{fontSize: 12, color: '#FF0D10'}}>
+                  {errors.email}
+                </Text>
+              )}
               <Input
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
@@ -57,10 +64,16 @@ export default function Register() {
                 placeholder="Password"
                 secureText={true}
               />
+               {touched.password && errors.password && (
+                <Text style={{fontSize: 12, color: '#FF0D10'}}>
+                  {errors.password}
+                </Text>
+              )}
               <TextButton
                 label="Sign Up"
                 onPress={handleSubmit}
                 buttonStyle={styles.btnSignUp}
+                disable={!isValid}
               />
             </View>
           )}
