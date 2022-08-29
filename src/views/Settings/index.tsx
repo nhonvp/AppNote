@@ -12,7 +12,11 @@ export default function Settings() {
     const nav = useNav()
     const dispatch= useDispatch();
     const user = useAppSelector(state => state.auth.email)
-  
+
+    useEffect(() => {
+      console.log(user)
+    }, [])
+    
     const handleLogOut = () => {
       dispatch(authAction.logOut())
       nav.navigate('Login')

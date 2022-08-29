@@ -42,7 +42,7 @@ export const signInWithGoogle = async () => {
   });
   try {
     const {idToken} = await GoogleSignin.signIn();
-    const googleCredential = await auth.GoogleAuthProvider.credential(idToken);
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     return auth().signInWithCredential(googleCredential);
   } catch (error) {
     console.log(error);

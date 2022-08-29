@@ -11,10 +11,10 @@ import React from 'react';
 import {width, height} from '../../utils/Responsive';
 import Colors from '../../utils/Colors';
 export interface InputProps extends TextInputProps {
-  value :string,
+  value ?:string,
   placeholder : string,
-  onChangeText :(e:string) => void 
-  onBlur :(e : NativeSyntheticEvent<TextInputFocusEventData>) => void,
+  onChangeText ?:(e:string) => void 
+  onBlur ?:(e : NativeSyntheticEvent<TextInputFocusEventData>) => void,
   secureText ?: boolean
 }
 
