@@ -28,8 +28,7 @@ const authSlice = createSlice({
   reducers: {
     loginSuccess: (state, action: PayloadAction<LoginPayload>) => {
       state.isLogging = true,
-      state.email = action.payload.email,
-      console.log(action)
+      state.email = action.payload.email
     },
     loginFailed: (state, action: PayloadAction<LoginPayload>) => {
       state.isLogging = false,

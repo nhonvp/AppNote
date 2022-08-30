@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {TextButton} from 'components/core/TextButton';
 import {useNav} from 'navigation/NavigationApp';
@@ -8,6 +8,7 @@ import {groupNoteAction} from 'features/groupNote/groupNoteSlice';
 import {useAppDispatch} from 'hooks';
 import firestore from '@react-native-firebase/firestore';
 import {GroupNotePayload} from 'typings/groupNote';
+import {deleteNoteGroup} from 'features/groupNote/groupNoteApi';
 
 export default function Home() {
   const nav = useNav();
@@ -18,7 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     getlist();
-    return () => {};
+    // console.log(groupNoteArr);
   }, []);
 
   const getlist = async () => {
@@ -27,10 +28,17 @@ export default function Home() {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(rs => {
-          setGroupNoteArr(arr => [
-            ...arr,
-            {title: rs.data().title, description: rs.data().description},
-          ]);
+          const itemExists = groupNoteArr.find(item => item.groupId === rs.id);
+          if (!itemExists) {
+            setGroupNoteArr(arr => [
+              ...arr,
+              {
+                groupId: rs.id,
+                title: rs.data().title,
+                description: rs.data().description,
+              },
+            ]);
+          }
         });
       });
   };
@@ -40,13 +48,23 @@ export default function Home() {
       groupNoteAction.createGroupNote({
         title: title,
         description: description,
+        note : []
       }),
     );
+    getlist();
   };
 
   const handleEditNoteGroup = () => {};
 
-  const handleDeleteNoteGroup = () => {};
+  const handleDeleteNoteGroup = async (groupId: string) => {
+    deleteNoteGroup(groupId);
+    const arr = groupNoteArr.filter(item => item.groupId !== groupId);
+    setGroupNoteArr(arr);
+  };
+
+  const handleNavNote = (item: GroupNotePayload) => {
+    nav.navigate('Note', {groupId: item.groupId, title: item.title});
+  };
 
   const renderCreateNoteGroup = () => {
     return (
@@ -59,7 +77,7 @@ export default function Home() {
           />
         </View>
         <TextButton
-          label="CreateNote"
+          label="CreateGroupNote"
           onPress={handleCreateNoteGroup}
           buttonStyle={styles.btnLogin}
         />
@@ -69,27 +87,31 @@ export default function Home() {
 
   const renderNoteGroup = () => {
     return (
-      <View >
+      <View>
         <Text style={styles.textList}>List GroupNote</Text>
-        <View >
-          {groupNoteArr.map((item,index) => {
+        <View>
+          {groupNoteArr.map((item, index) => {
             return (
-             <View style={styles.listNote} key={index.toString()}>
-               <View style={styles.groupNote}>
-                <Text style={styles.textTitle}>{item.title}</Text>
-                <Text style={styles.textDes}>{item.description}</Text>
-              </View>
-              <TextButton
-              label="Edit"
-              onPress={handleEditNoteGroup}
-              buttonStyle={styles.btnDelete}
-            />
-            <TextButton
-              label="Delete"
-              onPress={handleDeleteNoteGroup}
-              buttonStyle={styles.btnDelete}
-            />
-             </View>
+              <TouchableOpacity
+                onPress={() => handleNavNote(item)}
+                key={index.toString()}>
+                <View style={styles.listNote}>
+                  <View style={styles.groupNote}>
+                    <Text style={styles.textTitle}>{item.title}</Text>
+                    <Text style={styles.textDes}>{item.description}</Text>
+                  </View>
+                  <TextButton
+                    label="Edit"
+                    onPress={handleEditNoteGroup}
+                    buttonStyle={styles.btnDelete}
+                  />
+                  <TextButton
+                    label="Delete"
+                    onPress={() => handleDeleteNoteGroup(item.groupId)}
+                    buttonStyle={styles.btnDelete}
+                  />
+                </View>
+              </TouchableOpacity>
             );
           })}
         </View>

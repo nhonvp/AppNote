@@ -1,18 +1,23 @@
-import {GroupNotePayload} from '../../typings/groupNote';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export interface GroupNoteState {
   groupId: string;
   title: string;
   description: string;
-  text: string[];
+  note: string[];
+}
+
+export interface GroupNotePayload {
+  title : string,
+  description : string,
+  note : string[]
 }
 
 const initialState: GroupNoteState = {
   groupId: '',
   title: '',
   description: '',
-  text: [],
+  note: [],
 };
 
 const groupNoteSlice = createSlice({
@@ -20,10 +25,16 @@ const groupNoteSlice = createSlice({
   initialState,
   reducers: {
     createGroupNote: (state, action: PayloadAction<GroupNotePayload>) => {
-      console.log(action);
       state.title = action.payload.title;
       state.description = action.payload.description;
     },
+    // editGroupNote: (state, action: PayloadAction<GroupNotePayload>) => {
+    //   state.title = action.payload.title;
+    //   state.description = action.payload.description;
+    // },
+    // deleteNoteGroup: (state,action) => {
+    //   action
+    // }
   },
 });
 

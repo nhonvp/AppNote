@@ -17,7 +17,6 @@ export default StyleSheet.create({
         marginVertical : 20,
         width : width,
         flexDirection : "row",
-        justifyContent : 'space-between',
         alignItems : "center",
     },
     textList : {
@@ -27,16 +26,17 @@ export default StyleSheet.create({
         color :Colors.black
     },
     groupNote : {
-        width : width - 150,
+        width : width - 100,
         height: 50,
         borderRadius: 8,
         borderWidth: 1,
         marginVertical : 10 
     },
     textTitle : {
-        fontSize : 16,
+        fontSize : 20,
         fontWeight: "600",
-        color: Colors.black
+        color: Colors.black,
+        textTransform : "uppercase"
     },
     textDes : {
         ontSize : 13,

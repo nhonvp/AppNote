@@ -104,6 +104,7 @@ function* watchAuthLogin() {
       const actionLogin: PayloadAction<LoginPayload> = yield take(
         authAction.loginSuccess,
       );
+      console.log(actionLogin,'2')
       yield call(handleLoginWithEmailAndPassword, actionLogin);
     }
     yield take(authAction.logOut)
@@ -112,6 +113,7 @@ function* watchAuthLogin() {
 }
 
 export default function* authSaga() {
+  console.log('1')
   yield takeLatest(authAction.signUpRequest,handleSignUp)
   yield fork(watchAuthLogin);
 }

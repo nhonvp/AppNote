@@ -20,7 +20,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    console.log(auth().currentUser,"a")
+    // console.log(auth().currentUser)
   }, [])
 
   const handleLogin = ({
@@ -37,7 +37,7 @@ export default function Login() {
         password: password,
       }),
     );
-    nav.navigate('Home');
+    nav.navigate('BottomBar');
   };
 
   const handleSignUp = () => {
@@ -52,7 +52,7 @@ export default function Login() {
         password: '',
       }),
     );
-    nav.navigate('Home');
+    nav.navigate('BottomBar');
   };
 
   const handleLoginFacebook = async () => {
@@ -63,7 +63,7 @@ export default function Login() {
         password: '',
       }),
     );
-    nav.navigate('Home');
+    nav.navigate('BottomBar');
   };
 
   return (
