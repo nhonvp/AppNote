@@ -18,7 +18,7 @@ export interface Props {
   label?: string,
   disable ?: boolean,
   labelStyle ?: StyleProp<TextStyle>
-  onPress : () => void,
+  onPress ?: () => void,
 }
 
 export const TextButton = (props: Props) => {

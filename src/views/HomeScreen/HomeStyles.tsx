@@ -15,6 +15,10 @@ export default StyleSheet.create({
     },
     listNote :{
         marginVertical : 20,
+        width : width,
+        flexDirection : "row",
+        justifyContent : 'space-between',
+        alignItems : "center",
     },
     textList : {
         fontSize : 16,
@@ -23,21 +27,24 @@ export default StyleSheet.create({
         color :Colors.black
     },
     groupNote : {
-        width : width, 
+        width : width - 150,
         height: 50,
         borderRadius: 8,
         borderWidth: 1,
-        paddingVertical : 10 
+        marginVertical : 10 
     },
     textTitle : {
         fontSize : 16,
         fontWeight: "600",
         color: Colors.black
-
     },
     textDes : {
         ontSize : 13,
         fontWeight: "600",
         color: Colors.black
+    }, 
+    btnDelete : {
+        width : 50,
+        backgroundColor: Colors.black
     }
 });

@@ -1,5 +1,4 @@
 import firestore from '@react-native-firebase/firestore';
-// import  firebase  from 'utils/firebaseConfig';
 import { GroupNotePayload } from 'typings/groupNote';
 
 export const createGroupNote = async (payload:GroupNotePayload) => {
