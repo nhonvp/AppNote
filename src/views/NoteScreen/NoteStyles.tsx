@@ -25,5 +25,18 @@ export default StyleSheet.create({
     btnBack : {
         backgroundColor : Colors.black,
         width : 50
+    },
+    textListNote : {
+        fontSize : 16,
+        textAlign : "center",
+        fontWeight: "600",
+        color :Colors.black
+    },
+    listNote : {
+        // flexDirection : "row"
+    },
+    btnDelete :{
+        backgroundColor : Colors.black,
+        width : 50
     }
 });

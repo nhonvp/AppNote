@@ -1,33 +1,29 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { NotePayload } from 'typings/note';
 
-// export interface GroupNoteState {
-//   groupId: string;
-//   title: string;
-//   description: string;
-//   text: string[];
-// }
+export interface NoteState {
+  type : string,
+  noteId : string,
+  title : string,
+  content : string,
+  image : string
+}
 
-// export interface GroupNotePayload {
-//   title : string,
-//   description : string
-// }
-
-const initialState = {
-  groupId: '',
-  title: '',
-  description: '',
-  text: [],
+const initialState: NoteState = {
+  type : '',
+  noteId : '',
+  title : '',
+  content : '',
+  image : ''
 };
 
 const noteSlice = createSlice({
   name: 'note',
   initialState,
   reducers: {
-    // createGroupNote: (state, action: PayloadAction<GroupNotePayload>) => {
-    //   console.log(action);
-    //   state.title = action.payload.title;
-    //   state.description = action.payload.description;
-    // },
+    createNote: (state, action: PayloadAction<NotePayload>) => {
+      console.log(action);
+    },
   },
 });
 

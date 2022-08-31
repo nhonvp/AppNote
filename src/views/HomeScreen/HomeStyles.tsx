@@ -14,7 +14,7 @@ export default StyleSheet.create({
         marginHorizontal : 20
     },
     listNote :{
-        marginVertical : 20,
+        marginVertical : 5,
         width : width,
         flexDirection : "row",
         alignItems : "center",
@@ -39,12 +39,19 @@ export default StyleSheet.create({
         textTransform : "uppercase"
     },
     textDes : {
-        ontSize : 13,
+        fontSize : 13,
         fontWeight: "600",
         color: Colors.black
     }, 
     btnDelete : {
         width : 50,
         backgroundColor: Colors.black
+    },
+    loading : {
+        fontSize : 16,
+        fontWeight: "600",
+        color: Colors.black,
+        textAlign : "center",
+        padding: 5
     }
 });

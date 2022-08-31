@@ -8,7 +8,7 @@ import {Formik} from 'formik';
 import {SignUpPayload} from 'typings/auth';
 import {useAppDispatch, useAppSelector} from 'hooks';
 import {authAction} from 'features/auth/authSlice';
-import { validated } from 'utils/validated';
+import {validated} from 'utils/validated';
 
 export default function Register() {
   const nav = useNav();
@@ -33,7 +33,7 @@ export default function Register() {
         password: password,
       }),
     );
-    nav.navigate('Login')
+    nav.navigate('Login');
   };
   return (
     <View style={styles.container}>
@@ -44,9 +44,18 @@ export default function Register() {
           initialValues={initialValues}
           validationSchema={validated}
           onSubmit={values => handleSignUp(values)}>
-          {({handleChange, handleBlur, handleSubmit, values,touched,errors,isValid}) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            touched,
+            errors,
+            isValid,
+          }) => (
             <View>
               <Input
+                title="Email"
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
@@ -58,13 +67,14 @@ export default function Register() {
                 </Text>
               )}
               <Input
+                title="Password"
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
                 value={values.password}
                 placeholder="Password"
                 secureText={true}
               />
-               {touched.password && errors.password && (
+              {touched.password && errors.password && (
                 <Text style={{fontSize: 12, color: '#FF0D10'}}>
                   {errors.password}
                 </Text>

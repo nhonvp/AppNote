@@ -113,7 +113,6 @@ function* watchAuthLogin() {
 }
 
 export default function* authSaga() {
-  console.log('1')
   yield takeLatest(authAction.signUpRequest,handleSignUp)
   yield fork(watchAuthLogin);
 }

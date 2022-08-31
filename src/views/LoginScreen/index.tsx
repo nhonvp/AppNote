@@ -78,6 +78,7 @@ export default function Login() {
           {({handleChange,handleBlur,handleSubmit,values,touched,errors,isValid}) => (
             <View>
               <Input
+                title='Email'
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
@@ -89,6 +90,7 @@ export default function Login() {
                 </Text>
               )}
               <Input
+                title='Password'
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
                 value={values.password}
