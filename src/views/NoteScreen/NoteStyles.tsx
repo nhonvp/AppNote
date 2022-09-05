@@ -37,6 +37,10 @@ export default StyleSheet.create({
     },
     btnDelete :{
         backgroundColor : Colors.black,
-        width : 50
+        width : width/2
+    },
+    btn : {
+        flexDirection : "row",
+        // width : 'auto',
     }
 });

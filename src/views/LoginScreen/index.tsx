@@ -20,7 +20,6 @@ export default function Login() {
   };
 
   useEffect(() => {
-    // console.log(auth().currentUser)
   }, [])
 
   const handleLogin = ({

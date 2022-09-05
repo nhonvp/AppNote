@@ -20,6 +20,7 @@ export default function Note(props: any) {
   const [noteArr, setNoteArr] = useState<NotePayload[]>([]);
   const [noteChangeText, setNoteChangeText] = useState<string>('');
   const groupId = props.route.params.groupId;
+  const [search, setSearch] = useState<string>('')
 
   useEffect(() => {
     getListNote();
@@ -30,10 +31,10 @@ export default function Note(props: any) {
       .collection('groupNote')
       .doc(groupId)
       .update({
-        note: firestore.FieldValue.arrayUnion(
+        "note" : firestore.FieldValue.arrayUnion(
          {
           type: 'text',
-          noteId: generateString(10),
+          noteId: generateString(10).trim(),
           title: title,
           content: note,
           image: '',
@@ -42,8 +43,12 @@ export default function Note(props: any) {
     getListNote();
   };
 
+  const handleAddImage = () => {
+
+  }
+
   const getListNote = async () => {
-    const note = await firestore()
+    await firestore()
       .collection('groupNote')
       .doc(groupId)
       .get()
@@ -71,14 +76,12 @@ export default function Note(props: any) {
   const handleEditNote = () => {};
 
   const handleDeleteNote = async (noteId: string) => {
-    const a = await firestore()
-      .collection('groupNote')
-      .doc(groupId)
-      .update(
-        {
-          note : firestore.FieldValue.arrayRemove(0,noteId)
-        }
-      ).then(rs => console.log('deleted!',rs))
+    const add = await firestore()
+    .collection('groupNote')
+    .doc(groupId)
+    .update({
+      "note" : firestore.FieldValue.arrayRemove(noteId)
+    });
     
     // const filterNote = noteArr.filter(item => item.noteId !== noteId);
     // setNoteArr(filterNote);
@@ -87,7 +90,7 @@ export default function Note(props: any) {
 
   const renderNote = () => {
     return (
-      <View>
+      <View >
         <Text style={styles.textListNote}>List Note</Text>
         <View>
           <FlatList
@@ -101,24 +104,27 @@ export default function Note(props: any) {
               return (
                 <TouchableOpacity>
                   <View style={styles.listNote}>
-                    <View style={{marginRight: 40}}>
+                    <View style={{marginHorizontal: 20}}>
                       <Input
                         value={item.content}
                         title={item.title}
                         placeholder={item.title}
                         onChangeText={value => setNoteChangeText(value)}
                       />
+                     </View>
+                    <View style={styles.btn}>
+                      <TextButton
+                        label="Edit"
+                        onPress={handleEditNote}
+                        buttonStyle={styles.btnDelete}
+                      />
+                      <TextButton
+                        label="Delete"
+                        onPress={() => handleDeleteNote(item.noteId)}
+                        buttonStyle={styles.btnDelete}
+                      />
                     </View>
-                    <TextButton
-                      label="Edit"
-                      onPress={handleEditNote}
-                      buttonStyle={styles.btnDelete}
-                    />
-                    <TextButton
-                      label="Delete"
-                      onPress={() => handleDeleteNote(item.noteId)}
-                      buttonStyle={styles.btnDelete}
-                    />
+                   
                   </View>
                 </TouchableOpacity>
               );
@@ -138,18 +144,27 @@ export default function Note(props: any) {
       />
       <View>
         <Text style={styles.title}>{props.route.params.title}</Text>
+        <View>
+          <Input placeholder="Search" onChangeText={value => setSearch(value)} title="Search" />
+        </View>
         <View style={styles.input}>
           <Input placeholder="Title" onChangeText={value => setTitle(value)} />
           <Input placeholder="Note" onChangeText={value => setNote(value)} />
-          <TextButton
-            label="+"
-            onPress={handleAddNote}
-            buttonStyle={styles.btnAddNote}
-          />
+          <View style={styles.btn}>
+            <TextButton
+              label="+"
+              onPress={handleAddNote}
+              buttonStyle={styles.btnAddNote}
+            />
+            <TextButton
+              label="AddImage"
+              onPress={handleAddImage}
+              buttonStyle={styles.btnAddNote}
+            />
+          </View>
         </View>
-
-        {renderNote()}
       </View>
+      {renderNote()}
     </View>
   );
 }

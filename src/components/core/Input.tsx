@@ -37,7 +37,7 @@ export const Input = (props: InputProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 30,
+    marginBottom: 18,
   },
   input: {
     height: 50,

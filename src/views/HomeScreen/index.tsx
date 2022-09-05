@@ -27,7 +27,6 @@ export default function Home() {
   const [description, setDescription] = useState<string>('');
   const [groupNoteArr, setGroupNoteArr] = useState<GroupNotePayload[]>([]);
   const [groupNoteLoad, setGroupNoteLoad] = useState<number>(5);
-  const [lastVisible, setLastVisible] = useState<number>(0);
   const [startAfter, setStartAfter] = useState<number>(Object);
 
   useEffect(() => {
@@ -68,8 +67,6 @@ export default function Home() {
       .then(querySnapshot => {
         querySnapshot.forEach(rs => {
           const itemExists = groupNoteArr.find(item => item.groupId === rs.id);
-          // lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-          // setStartAfter(lastVisible);
           if (!itemExists) {
             setGroupNoteArr(arr => [
               ...arr,
