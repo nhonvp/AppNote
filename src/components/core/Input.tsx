@@ -5,18 +5,22 @@ import {
   TextInputProps,
   View,
   NativeSyntheticEvent,
-  TextInputFocusEventData
+  TextInputFocusEventData,
+  StyleProp,
+  TextStyle
 } from 'react-native';
 import React from 'react';
 import {width, height} from '../../utils/Responsive';
 import Colors from '../../utils/Colors';
+
 export interface InputProps extends TextInputProps {
   value ?:string,
   title ?:string,
   placeholder ?: string,
   onChangeText ?:(e:string) => void 
   onBlur ?:(e : NativeSyntheticEvent<TextInputFocusEventData>) => void,
-  secureText ?: boolean
+  secureText ?: boolean,
+  borderStyle ?: StyleProp<TextStyle>
 }
 
 export const Input = (props: InputProps) => {
@@ -27,9 +31,10 @@ export const Input = (props: InputProps) => {
             onBlur={props.onBlur}
             placeholder={props.placeholder}
             onChangeText={props.onChangeText}
-            style={styles.input}
+            style={[styles.input,props.borderStyle]}
             secureTextEntry={props.secureText}
             value={props.value}
+            multiline
           />
     </View>
   );
@@ -41,7 +46,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    with: width - 40,
     borderWidth: 1,
     padding: 10,
     color: Colors.black,

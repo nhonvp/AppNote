@@ -1,28 +1,50 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { NotePayload } from 'typings/note';
+import {NotePayload} from 'typings/note';
 
 export interface NoteState {
-  type : string,
-  noteId : string,
-  title : string,
-  content : string,
-  image : string
+  loading: boolean;
+  data: {
+    type: string;
+    noteId: string;
+    title: string;
+    content: string;
+    image: string;
+  };
+  error : boolean
 }
 
 const initialState: NoteState = {
-  type : '',
-  noteId : '',
-  title : '',
-  content : '',
-  image : ''
+  loading: false,
+  data: {
+    type: '',
+    noteId: '',
+    title: '',
+    content: '',
+    image: '',
+  },
+  error : false
 };
 
 const noteSlice = createSlice({
   name: 'note',
   initialState,
   reducers: {
-    createNote: (state, action: PayloadAction<NotePayload>) => {
-      console.log(action);
+    fetchNote : (state,action) => {
+      state.loading = false,
+      state.error = false
+    },
+    fetchAddNoteRequest: (state,action:PayloadAction<NotePayload>) => {
+      state.loading = true;
+      state.error = false
+    },
+    fetchAddNote: (state, action: PayloadAction<NotePayload>) => {
+      state.loading = false;
+      state.data = action.payload
+      state.error = false
+    },
+    fetchAddNoteFailed: state => {
+      state.loading = false,
+      state.error = true
     },
   },
 });

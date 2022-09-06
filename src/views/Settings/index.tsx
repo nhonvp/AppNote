@@ -14,7 +14,7 @@ export default function Settings() {
     const user = useAppSelector(state => state.auth.email)
 
     useEffect(() => {
-      console.log(user)
+      // console.log(user)
     }, [])
     
     const handleLogOut = () => {

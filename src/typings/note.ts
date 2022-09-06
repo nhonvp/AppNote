@@ -4,6 +4,7 @@ export interface NotePayload {
   title: string;
   content: string;
   image: string;
+  groupId : string
 }
 export interface TypePayload {
   image: string;

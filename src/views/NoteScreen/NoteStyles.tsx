@@ -33,14 +33,22 @@ export default StyleSheet.create({
         color :Colors.black
     },
     listNote : {
-        // flexDirection : "row"
+        flexDirection : "row",
+        justifyContent : 'space-around',
+        alignItems : "center",
+        width : width,
+        marginHorizontal : 10
     },
     btnDelete :{
         backgroundColor : Colors.black,
-        width : width/2
+        width : 50
     },
     btn : {
         flexDirection : "row",
         // width : 'auto',
+    },
+    status : {
+       width : 30,
+       height : 30 
     }
 });
